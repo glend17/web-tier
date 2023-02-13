@@ -32,8 +32,8 @@ public class AWSUtility {
 
     private AmazonS3 s3Storage;
 
-    public static final String SQS_REQUEST_URL = "https://sqs.us-east-1.amazonaws.com/33640/cse546-project1-request-queue";
-    public static final String SQS_RESPONSE_URL = "https://sqs.us-east-1.amazonaws.com/33640/cse546-project1-response-queue";
+    public static final String SQS_REQUEST_URL = "";
+    public static final String SQS_RESPONSE_URL = "";
 
 
     private static final String ACCESS_KEY = "";
