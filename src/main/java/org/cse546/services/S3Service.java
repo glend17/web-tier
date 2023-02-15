@@ -1,6 +1,8 @@
 package org.cse546.services;
 
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.util.IOUtils;
 import org.cse546.utility.AWSUtility;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -8,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 @Service
 public class S3Service {
@@ -28,21 +28,43 @@ public class S3Service {
 
     private List<String> storeImagesToS3StorageBucket(MultipartFile[] files){
         List<String> fileNameList = new ArrayList<String>();
-        for (MultipartFile uploadedFile : files) {
-            String fileName = uploadedFile.getOriginalFilename();
+        for (MultipartFile multipartFile : files) {
+            String fileName = multipartFile.getOriginalFilename();
             String keyName = fileName;
-            InputStream is = null;
+            File file = null;
             try {
-                is = uploadedFile.getInputStream();
+                byte[] contents = IOUtils.toByteArray(multipartFile.getInputStream());
+                InputStream stream = new ByteArrayInputStream(contents);
+                ObjectMetadata meta = new ObjectMetadata();
+                meta.setContentLength(contents.length);
+                meta.setContentType("jpeg");
+
+                logger.info("Saving Image to s3 bucket: {} keyname: {} metadata: {}",keyName,meta);
+                awsUtility.getAmazonS3StorageBucket().putObject(awsUtility.getImageBucketName(), keyName, stream,  meta);
+                fileNameList.add(fileName);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            ObjectMetadata metadata = null;
-            //logger.info("Saving Image to s3 bucket: {} keyname: {} metadata: {}",keyName,metadata);
-            awsUtility.getAmazonS3StorageBucket().putObject(awsUtility.getImageBucketName(), keyName, is, metadata);
-            fileNameList.add(fileName);
+
         }
 
         return fileNameList;
     }
+
+    private File convertMultiPartFileToFile(MultipartFile multipartFile) throws IOException {
+        if (Objects.isNull(multipartFile.getOriginalFilename())) {
+            throw new RuntimeException("File does not exist");
+        }
+        File file = new File(multipartFile.getOriginalFilename());
+        FileOutputStream outputStream = new FileOutputStream(file);
+        try {
+            outputStream.write(multipartFile.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            outputStream.close();
+        }
+        return file;
+    }
+
 }

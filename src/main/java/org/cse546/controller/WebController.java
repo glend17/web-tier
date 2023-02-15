@@ -34,7 +34,7 @@ public class WebController {
         List<String> fileNameList = s3Service.saveImagesToS3(files);
         //saved images are sent to SQS request queue
         sqsService.sendSavedImagesToRequestQueue(fileNameList);
-        sqsService.receiveSQSResponse(fileNameList);
+//        sqsService.receiveSQSResponse(fileNameList);
         return "ok";
     }
 
