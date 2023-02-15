@@ -7,10 +7,12 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import com.amazonaws.services.s3.model.PutObjectRequest;//.awssdk.services.s3.model.PutObjectRequest;
+
+import javax.annotation.PostConstruct;
 
 //Logging
 
@@ -21,7 +23,7 @@ public class AWSUtility {
     private static final Logger logger = LoggerFactory.getLogger(AWSUtility.class);
 
     // name of s3 bucket that stores images
-    private String imageBucketName;
+    private String imageBucketName = "";
 
     //name of s3 bucket that stores result
     private String resultBucketName;
@@ -52,7 +54,6 @@ public class AWSUtility {
     @PostConstruct
     private void initializeS3Storage() {
         logger.info("Initializing s3 storage");
-        this.imageBucketName = "";
         BasicAWSCredentials AWS_CREDENTIALS = getAWSCREDENTIALS();
         this.s3Storage =
                 AmazonS3ClientBuilder.standard()
