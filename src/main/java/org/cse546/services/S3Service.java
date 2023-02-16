@@ -51,20 +51,4 @@ public class S3Service {
         return fileNameList;
     }
 
-    private File convertMultiPartFileToFile(MultipartFile multipartFile) throws IOException {
-        if (Objects.isNull(multipartFile.getOriginalFilename())) {
-            throw new RuntimeException("File does not exist");
-        }
-        File file = new File(multipartFile.getOriginalFilename());
-        FileOutputStream outputStream = new FileOutputStream(file);
-        try {
-            outputStream.write(multipartFile.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            outputStream.close();
-        }
-        return file;
-    }
-
 }
