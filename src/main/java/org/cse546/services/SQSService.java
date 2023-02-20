@@ -54,7 +54,7 @@ public class SQSService {
             for(Message m : messages){
                 String body = m.getBody();
                 //responses are of the form "image name,result"
-                String[] values = body.split(",");
+                String[] values = body.split(":");
 
                 //first part is the name of image, second part is the result from the
                 //Neural network

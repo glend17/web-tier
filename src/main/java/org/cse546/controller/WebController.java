@@ -29,10 +29,12 @@ public class WebController {
     }
 
     @PostMapping("/uploadImagesAndGetResults")
-    public String uploadImagesAndGetResults(@RequestParam("files") MultipartFile[] files) {
+    public String uploadImagesAndGetResults(@RequestParam("files") MultipartFile files) {
         logger.info("in upload image and get results");
+        MultipartFile[] files_arr = new MultipartFile[1];
+        files_arr[0] = files;
         //processes the input and waits and fetches all the responses
-        List<String> fileNameList = s3Service.saveImagesToS3(files);
+        List<String> fileNameList = s3Service.saveImagesToS3(files_arr);
         //saved images are sent to SQS request queue
         sqsService.sendSavedImagesToRequestQueue(fileNameList);
         Map<String,String> result = sqsService.receiveSQSResponse(fileNameList);
