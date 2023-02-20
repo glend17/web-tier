@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping
@@ -34,7 +35,7 @@ public class WebController {
         List<String> fileNameList = s3Service.saveImagesToS3(files);
         //saved images are sent to SQS request queue
         sqsService.sendSavedImagesToRequestQueue(fileNameList);
-//        sqsService.receiveSQSResponse(fileNameList);
+        Map<String,String> result = sqsService.receiveSQSResponse(fileNameList);
         return "ok";
     }
 
