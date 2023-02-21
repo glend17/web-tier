@@ -29,7 +29,7 @@ public class WebController {
     }
 
     @PostMapping("/uploadImagesAndGetResults")
-    public String uploadImagesAndGetResults(@RequestParam("files") MultipartFile files) {
+    public String uploadImagesAndGetResults(@RequestParam("myfile") MultipartFile files) {
         logger.info("in upload image and get results");
         MultipartFile[] files_arr = new MultipartFile[1];
         files_arr[0] = files;
