@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 //Service used to store images
 
@@ -21,6 +21,8 @@ public class SQSService {
 
     @Autowired
     private AWSUtility awsUtility;
+
+    Random random = new Random ();
 
     //Request queue
     public void sendSavedImagesToRequestQueue(List<String> fileNames){
@@ -44,7 +46,7 @@ public class SQSService {
         return msgList;
     }
 
-    public Map<String,String> receiveSQSResponse(List<String> fileNameList){
+    public Map<String,String> receiveSQSResponse(List<String> fileNameList, String image_name) throws InterruptedException {
         int originalFileSize = fileNameList.size();
         int filesRead = 0;
         Map<String,String> results = new HashMap<>();
@@ -58,15 +60,21 @@ public class SQSService {
 
                 //first part is the name of image, second part is the result from the
                 //Neural network
-                results.put(values[0], values[1]);
+//                if (values[0].equals (image_name)) {
+                    results.put (values[0], values[1]);
 
-                logger.info("Received " + values[0]);
-                try{
-                    //delete the message
-                    awsUtility.getSQSQueue().deleteMessage(awsUtility.getSqsResponseUrl(), m.getReceiptHandle());
-                }catch (Exception e) {
-                    logger.info("exception while deleting message, maybe deleted already");
-                }
+                    logger.info ("Received " + values[0]);
+                    try {
+                        //delete the message
+                        awsUtility.getSQSQueue ().deleteMessage (awsUtility.getSqsResponseUrl (), m.getReceiptHandle ());
+                        logger.info ("Message Deleted");
+                    } catch (Exception e) {
+                        logger.info ("exception while deleting message, maybe deleted already");
+                    }
+//                } else
+//                {
+//                    Thread.sleep((long)((random.nextDouble()*3+1)*1000));
+//                }
             }
         }
         return results;

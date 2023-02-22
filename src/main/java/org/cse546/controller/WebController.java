@@ -29,16 +29,22 @@ public class WebController {
     }
 
     @PostMapping("/uploadImagesAndGetResults")
-    public String uploadImagesAndGetResults(@RequestParam("myfile") MultipartFile files) {
+    public String uploadImagesAndGetResults(@RequestParam("myfile") MultipartFile files) throws InterruptedException {
         logger.info("in upload image and get results");
         MultipartFile[] files_arr = new MultipartFile[1];
         files_arr[0] = files;
+        String image_name = files.getOriginalFilename ();
         //processes the input and waits and fetches all the responses
         List<String> fileNameList = s3Service.saveImagesToS3(files_arr);
         //saved images are sent to SQS request queue
         sqsService.sendSavedImagesToRequestQueue(fileNameList);
-        Map<String,String> result = sqsService.receiveSQSResponse(fileNameList);
-        return "ok";
+        Map<String,String> result = sqsService.receiveSQSResponse(fileNameList, image_name);
+        String res = null;
+        for (Map.Entry< String, String > m: result.entrySet ()){
+            String file = m.getKey ();
+            res = m.getValue ();
+        }
+        return res ;
     }
 
 
