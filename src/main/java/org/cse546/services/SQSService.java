@@ -36,7 +36,7 @@ public class SQSService {
         ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest()
                 .withQueueUrl(awsUtility.getSqsResponseUrl())
                 .withMaxNumberOfMessages(10)
-                .withWaitTimeSeconds(15);	//use long polling
+                .withWaitTimeSeconds(1);	//use long polling
 
 
         ReceiveMessageResult result = awsUtility.getSQSQueue().receiveMessage(receiveMessageRequest);
