@@ -9,14 +9,18 @@ Glen Dsouza, ASU ID: 1222318617, Email: gsdsouza@asu.edu
 Member Tasks:
 Pratyush
 1. Creating the AMI image id and template with all dependencies. Took up the responsibility of understanding how AMI image id can be templatized. Figured out how all the dependencies(downloading java, bringing up jar on bootup) is done. 
-2. Creating App Tier and debugging/testing using Spring Boot. Figured out technical issues with the response queue deletion. Figured out how to process images in app-tier, there were issues with consuming the message and sending it as an input to invoke python process.
-3. Adding template to autoscaling group, figuring out the autoscaling process. Testing end to end. Alarm and policies required to scale up app-tier. Testing the scaling process. 
+2. Creating App Tier and debugging/testing using Spring Boot. Figured out technical issues with the response queue deletion. Figured out how to process images in app-tier, there were issues with consuming the message and sending it as an input to invoke the python process.
+3. Adding template to autoscaling group, figuring out the autoscaling process. Testing end to end. Testing the scaling process. 
+4. Configure the script to auto run the jar to start the Apptier application
+
 
 Dhanraj
-1. Creating the AMI image id and template with all dependencies. Took up the responsibility of understanding how AMI image id can be templatized. Figured out how all the dependencies(downloading java, bringing up jar on bootup) is done.
-2. AWS Infrastructure side configuration, deployment and testing of web-tier and app-tier. Figured out alarm and policies required to scale app tier. Performed a series of end to end tests and found issues and debugged and fixed them.
-3. Metrics evaluation using dashboard. Found a critical issue with the deletion of the SQS response queue. Figured out how to fix it.
-
+1. Configured, deployed, and tested web-tier and app-tier infrastructure on AWS. 
+2. Conducted a series of end-to-end tests to identify and fix issues.
+3. Handled CloudWatch alarms and policies for autoscaling group to ensure smooth scaling.
+4. Conducted a POC to fine-tune visibility timeout, wait-time, and maximum number of messages of SQS system for improved speed and to prevent HTTP timeouts.
+5. Identified and fixed a critical issue with the deletion of the SQS response queue.
+6. Created an AWS Dashboard to provide one centralized location for evaluating project metrics.
 
 Glen
 1. Creating web-tier using Spring Boot and debugging/testing using Spring Boot. Entire web-tier application, AWS java sdk, initialization of utility classes required to connect to AWS. Logic flow within web tier and SQS and S3 services. 
@@ -27,8 +31,8 @@ Glen
 ```
 
 PEM key for web-tier SSH access:
-Web tier’s URL:
+Web tier’s URL: http://ec2-44-205-23-195.compute-1.amazonaws.com:8080/uploadImagesAndGetResults
 EIP:
-SQS queue names: 
-S3 bucket names:
+SQS queue names: cc-input-sqs, cc-output-sqs
+S3 bucket names: cc-project-image-bucket, cc-project-result-bucket
 ```
