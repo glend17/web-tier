@@ -23,16 +23,19 @@ Dhanraj
 6. Created an AWS Dashboard to provide one centralized location for evaluating project metrics.
 
 Glen
-1. Creating web-tier using Spring Boot and debugging/testing using Spring Boot. Entire web-tier application, AWS java sdk, initialization of utility classes required to connect to AWS. Logic flow within web tier and SQS and S3 services. 
-2. Creating App Tier and debugging/testing using Spring Boot. AWS java sdk, initialization of utility classes, java code in all the packages. The logic flow within and between the app-tier application, s3 and sqs services.
-3. Project report, architecture diagram. 
+1. Created web-tier using Spring Boot and debugging/testing using Spring Boot. Entire web-tier application, AWS java sdk, initialization of utility classes required to connect to AWS. 
+2. Wrote the Logic flow within web tier and SQS and S3 services. Debugged issues with messages successfully getting sent to the queue and buckets.
+3. Created App Tier and debugging/testing using Spring Boot. AWS java sdk, initialization of utility classes, java code in all the packages. 
+4. Wrote the the logic flow within and between the app-tier application, s3 and sqs services.
+5. Project report, architecture diagram. 
+
 
 ```
 ```
 
-PEM key for web-tier SSH access:
+PEM key for web-tier SSH access: Can be sent on email seperately due to security concerns
 Web tier’s URL: http://ec2-44-205-23-195.compute-1.amazonaws.com:8080/uploadImagesAndGetResults
-EIP:
+EIP: Not Required
 SQS queue names: cc-input-sqs, cc-output-sqs
 S3 bucket names: cc-project-image-bucket, cc-project-result-bucket
 ```
