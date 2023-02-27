@@ -7,12 +7,12 @@ Glen Dsouza, ASU ID: 1222318617, Email: gsdsouza@asu.edu
 
 ```
 Member Tasks:
+
 Pratyush
 1. Creating the AMI image id and template with all dependencies. Took up the responsibility of understanding how AMI image id can be templatized. Figured out how all the dependencies(downloading java, bringing up jar on bootup) is done. 
 2. Creating App Tier and debugging/testing using Spring Boot. Figured out technical issues with the response queue deletion. Figured out how to process images in app-tier, there were issues with consuming the message and sending it as an input to invoke the python process.
 3. Adding template to autoscaling group, figuring out the autoscaling process. Testing end to end. Testing the scaling process. 
 4. Configure the script to auto run the jar to start the Apptier application
-
 
 Dhanraj
 1. Configured, deployed, and tested web-tier and app-tier infrastructure on AWS. 
